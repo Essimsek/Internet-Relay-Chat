@@ -1,11 +1,10 @@
-#pragma once
-
 #include <iostream>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <poll.h>
 #include <cstring>
+#include <vector>
 
 class Server {
     private:
