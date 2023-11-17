@@ -17,7 +17,7 @@ std::vector<std::string> splitString(std::string str, char splitter){
         result.push_back(current);
     return result;
 }
-
+/*
 int runCommand(Server sv, Client cl, std::vector <std::string> command)
 {
     std::cout << "here" << std::endl;
@@ -27,30 +27,30 @@ int runCommand(Server sv, Client cl, std::vector <std::string> command)
         //runPrivMsg(cl);
     return 1;
 }
-
+*/
 int getClientCommand(Server &sv, Client &cl, std::string buffer)
 {
     std::cout << "Client <" << cl.getClientName() << ">: " << buffer << "::" << std::endl;
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
     
-    if (cl.getClientAuth() == AUTH)
-        return (runCommand(sv, cl, command));
+    //if (cl.getClientAuth() == AUTH)
+        //return (runCommand(sv, cl, command));
     if (command[0] == "PASS" && command.size() == 2 && cl.getClientAuth() == NOT_AUTH)
     {
         if (sv.checkPassword(command[1]) == 0)
         {
             cl.setClientAuth(PASS_AUTH);
-            cl.sendMessage(":OMERLUTFU 451 omerl :PASSWORD CORRECT\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :PASSWORD CORRECT\n");
         }
         else
-            cl.sendMessage(":OMERLUTFU 451 omerl :PASSWORD INCORRECT\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 464 " + cl.getClientName() + " :PASSWORD INCORRECT\n");
     }
     if (command[0] == "NICK" && command.size() == 2 && cl.getClientAuth() == PASS_AUTH)
     {
         cl.setNickName(command[1]);
         cl.setClientAuth(NICK_AUTH);
-        cl.sendMessage(":OMERLUTFU 435 omerl :Nickname is saved\n");
+        cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :Nickname is saved\n");
     }
     if (command[0] == "USER" && command.size() >= 4 && cl.getClientAuth() == NICK_AUTH)
     {
@@ -58,7 +58,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         cl.hostname = command[2];
         cl.servername = command[3];
         cl.setClientAuth(AUTH);
-        cl.sendMessage(":OMERLUTFU 451 omerl :Welcome to karsimIRC\n");
+        cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :Welcome to karsimIRC\n");
     }
     return 1;
 }

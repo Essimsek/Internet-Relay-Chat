@@ -19,10 +19,11 @@ class Server {
     public:
         Server();
         ~Server();
-        void setUpServer(int port, std::string pw);
-        int getServerFd();
-        struct sockaddr_in getServerAddress();
-        int checkPassword(std::string pw);
+        void    setUpServer(int port, std::string pw);
+        int     getServerFd();
+        struct  sockaddr_in getServerAddress();
+        int     checkPassword(std::string pw);
+        void    getInformation();
 
         int num_clients;
         std::vector <std::string>chList;

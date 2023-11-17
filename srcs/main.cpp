@@ -15,15 +15,17 @@ int main(int ac, char **av)
 
     if (ac != 3)
         ft_error("Usage: ./ircserv <port> <password>");
-
-    char buffer[64];
+    
+    // Linux = HOST_NAME_MAX macos = _SC_HOST_NAME_MAX both of them equal = 72
+    char buffer[72];
     std::vector <Client> cls;
-    char hostname[HOST_NAME_MAX];
-    gethostname(hostname, HOST_NAME_MAX);
+    char hostname[72];
+    gethostname(hostname, 64);
     Server sv;
     sv.setUpServer(atoi(av[1]), av[2]);
     sv.hostname = hostname;
     int server_socket = sv.getServerFd();
+    sv.getInformation();
     struct sockaddr_in server_address = sv.getServerAddress();
 
     bind(server_socket, (struct sockaddr*) &server_address, sizeof(server_address));

@@ -25,6 +25,16 @@ struct sockaddr_in Server::getServerAddress(){
     return (this->server_address);
 }
 
+void Server::getInformation()
+{
+    std::cout<<"Server Password   : "<<this->password<<std::endl;
+    std::cout<<"Server Hostname   : "<<this->hostname<<std::endl;
+    std::cout<<"Server Fd         : "<<this->serverFd<<std::endl;
+    std::cout<<"Server sin port   : "<<ntohs((this->server_address).sin_port)<<std::endl;
+    std::cout<<"Server sin family : "<<static_cast<int>((this->server_address).sin_family) << std::endl;
+    std::cout<<"Server sin address: "<<(this->server_address).sin_addr.s_addr<<std::endl;
+}
+
 int Server::checkPassword(std::string pw)
 {
     pw = pw.substr(0, pw.size()-2);
