@@ -9,9 +9,9 @@
 
 int main(int ac, char **av)
 {
-    if (ac != 2)
+    if (ac != 3)
     {
-        std::cout << "Usage: ./ircserv <port>" << std::endl;
+        std::cout << "Usage: ./ircserv <port> <password>" << std::endl;
         exit(-1);
     }
 

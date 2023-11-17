@@ -1,4 +1,4 @@
-NAME = irc
+NAME = ircserv
 
 CC = g++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
