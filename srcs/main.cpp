@@ -18,13 +18,14 @@ int main(int ac, char **av)
     std::string temp;
     char message[64] = "Welcome to IRC-EMOM\n";
     char buffer[64];
-    std::string str;
+
     struct sockaddr_in client_address;
 	socklen_t client_len = sizeof(client_address);
 
     int server_socket, client_sockets[MAX_CLIENTS], num_clients = 0;
     Server sv;
-    sv.setUpServer(atoi(av[1]));
+    sv.setUpServer(atoi(av[1]), av[2]);
+    sv.getInformation();
     server_socket = sv.getServerFd();
     struct sockaddr_in server_address = sv.getServerAddress();
 

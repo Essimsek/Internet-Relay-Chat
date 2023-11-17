@@ -7,15 +7,20 @@
 #include <vector>
 
 class Server {
-    private:
-        int serverFd;
-        struct sockaddr_in server_address;
-    public:
-        Server();
-        ~Server();
-        void setUpServer(int port);
-        int getServerFd();
-        struct sockaddr_in getServerAddress();
-        
-        std::vector <std::string>chList;
+	private:
+		int			serverFd;
+		std::string password;
+		struct sockaddr_in server_address;
+	public:
+		Server();
+		~Server();
+		void	setUpServer(int port, std::string password);
+		int		getServerFd();
+
+		// For debuging
+		void	getInformation();
+
+		struct	sockaddr_in getServerAddress();
+		
+		std::vector <std::string>chList;
 };
