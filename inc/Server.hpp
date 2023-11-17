@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -5,22 +7,21 @@
 #include <poll.h>
 #include <cstring>
 #include <vector>
+#include "Client.hpp"
 
 class Server {
-	private:
-		int			serverFd;
-		std::string password;
-		struct sockaddr_in server_address;
-	public:
-		Server();
-		~Server();
-		void	setUpServer(int port, std::string password);
-		int		getServerFd();
+    private:
+        int serverFd;
+        struct sockaddr_in server_address;
+        std::string password;
+    public:
+        Server();
+        ~Server();
+        void setUpServer(int port, std::string pw);
+        int getServerFd();
+        struct sockaddr_in getServerAddress();
+        int checkPassword(std::string pw);
 
-		// For debuging
-		void	getInformation();
-
-		struct	sockaddr_in getServerAddress();
-		
-		std::vector <std::string>chList;
+        int num_clients;
+        std::vector <std::string>chList;
 };
