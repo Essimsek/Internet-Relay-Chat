@@ -4,9 +4,8 @@
 
 #define NOT_AUTH 0
 #define PASS_AUTH 1
-#define USER_AUTH 2
-#define NICK_AUTH 3
-#define AUTH 4
+#define NICK_AUTH 2
+#define AUTH 3
 
 class Client {
     private:

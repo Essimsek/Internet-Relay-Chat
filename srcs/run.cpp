@@ -21,12 +21,17 @@ std::vector<std::string> splitString(std::string str, char splitter){
 int runCommand(Server sv, Client cl, std::vector <std::string> command)
 {
     std::cout << "here" << std::endl;
+    if (command[0] == "JOIN" && command.size() == 2);
+    //    runJoin(sv, cl, command);
+    if (command[0] == "PRIVMSG" && command.size() >= 3);
+        //runPrivMsg(cl);
     return 1;
 }
 
-int getClientCommand(Server sv, Client cl, std::string buffer)
+int getClientCommand(Server &sv, Client &cl, std::string buffer)
 {
-    std::cout << "Client <" << cl.getClientName() << ">: " << buffer << std::endl;
+    std::cout << "Client <" << cl.getClientName() << ">: " << buffer << "::" << std::endl;
+    std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
     
     if (cl.getClientAuth() == AUTH)
@@ -45,6 +50,7 @@ int getClientCommand(Server sv, Client cl, std::string buffer)
     {
         cl.setNickName(command[1]);
         cl.setClientAuth(NICK_AUTH);
+        cl.sendMessage(":OMERLUTFU 435 omerl :Nickname is saved\n");
     }
     if (command[0] == "USER" && command.size() >= 4 && cl.getClientAuth() == NICK_AUTH)
     {

@@ -7,6 +7,8 @@
 #include <poll.h>
 #include <cstring>
 #include <vector>
+#include <unistd.h>
+#include <limits.h>
 #include "Client.hpp"
 
 class Server {
@@ -24,4 +26,5 @@ class Server {
 
         int num_clients;
         std::vector <std::string>chList;
+        char *hostname;
 };

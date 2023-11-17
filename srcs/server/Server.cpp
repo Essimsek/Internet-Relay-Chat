@@ -27,6 +27,6 @@ struct sockaddr_in Server::getServerAddress(){
 
 int Server::checkPassword(std::string pw)
 {
-    pw = pw.substr(0, pw.size()-1);
+    pw = pw.substr(0, pw.size()-2);
     return (pw.compare(this->password));
 }

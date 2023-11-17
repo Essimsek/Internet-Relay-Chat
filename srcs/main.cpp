@@ -2,7 +2,7 @@
 
 #define MAX_CLIENTS 32
 
-int getClientCommand(Server sv, Client cl, std::string buffer);
+int getClientCommand(Server &sv, Client &cl, std::string buffer);
 
 void ft_error(std::string str)
 {
@@ -12,13 +12,17 @@ void ft_error(std::string str)
 
 int main(int ac, char **av)
 {
+
     if (ac != 3)
         ft_error("Usage: ./ircserv <port> <password>");
 
     char buffer[64];
     std::vector <Client> cls;
+    char hostname[HOST_NAME_MAX];
+    gethostname(hostname, HOST_NAME_MAX);
     Server sv;
     sv.setUpServer(atoi(av[1]), av[2]);
+    sv.hostname = hostname;
     int server_socket = sv.getServerFd();
     struct sockaddr_in server_address = sv.getServerAddress();
 
