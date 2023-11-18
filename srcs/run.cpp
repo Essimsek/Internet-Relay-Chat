@@ -54,7 +54,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     }
     if (command[0] == "NICK")
     {
-        if (cl.getClientAuth() == PASS_AUTH && command.size() == 2)
+        if (cl.getClientAuth() == PASS_AUTH)
         {
             cl.setNickName(command[1]);
             cl.setClientAuth(NICK_AUTH);
