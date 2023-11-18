@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Server.hpp"
+#include "irc.hpp"
 
 class Channel {
     private:

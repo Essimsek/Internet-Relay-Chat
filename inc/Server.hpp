@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "Client.hpp"
+#include "Channel.hpp"
 
 class Server {
     private:
@@ -27,5 +28,6 @@ class Server {
 
         int num_clients;
         std::vector <std::string>chList;
+        std::vector <Client> clients;
         char *hostname;
 };

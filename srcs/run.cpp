@@ -34,7 +34,6 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     std::cout << "Client <" << cl.getClientName() << ">: " << buffer << "::" << std::endl;
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
-    std::cout << command[0] << command[1] << std::endl;
     
     //if (cl.getClientAuth() == AUTH)
         //return (runCommand(sv, cl, command));
@@ -60,6 +59,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         cl.hostname = command[2];
         cl.servername = command[3];
         cl.setClientAuth(AUTH);
+        sv.clients.push_back(cl);
         cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :Welcome to karsimIRC\n");
     }
     return 1;

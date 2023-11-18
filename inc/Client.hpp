@@ -1,7 +1,5 @@
 #pragma once
-
-#include "Server.hpp"
-
+#include "irc.hpp"
 #define NOT_AUTH 0
 #define PASS_AUTH 1
 #define NICK_AUTH 2
@@ -29,6 +27,5 @@ class Client {
         std::string hostname;
         std::string username;
         std::string servername;
-
 
 };
