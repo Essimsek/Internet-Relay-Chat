@@ -1,16 +1,6 @@
 #include "../inc/Server.hpp"
 #include <sstream>
-
-void runJoin(Server &sv, Client &cl, std::vector <std::string> command)
-{
-    Channel ch(command[1].substr(0, command[1].size()-2), cl);
-    sv.chList.push_back(ch);
-    std::cout << "Channel list:" << std::endl;
-    for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); ++it) {
-        std::cout << "channel list elemani: ";
-        std::cout << it->chName << std::endl;
-    }
-}
+#include "../inc/Commands.hpp"
 
 std::vector<std::string> splitString(const std::string& str, char delimiter) {
     std::istringstream stream(str);
@@ -27,7 +17,7 @@ std::vector<std::string> splitString(const std::string& str, char delimiter) {
 int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
 {
     if (command[0] == "JOIN" && command.size() == 2)
-        runJoin(sv, cl, command);
+        Commands::runJoin(sv, cl, command[1].substr(0, command[1].size()-DELIMETER));
     return 1;
 }
 
@@ -37,6 +27,9 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
     
+    if (cl.getClientAuth() == AUTH)
+        return (runCommand(sv, cl, command));
+
     if ((command[0] == "PASS" || command[0] == "PASS\n") && cl.getClientAuth() == NOT_AUTH)
     {
         if (sv.checkPassword(command[1]) == 0 && command.size() == 2)
@@ -79,7 +72,5 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         else
             cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + "USER usage 'USER <user name> <host name> <serv name>'\n");
     }
-    if (cl.getClientAuth() == AUTH)
-        return (runCommand(sv, cl, command));
     return 1;
 }

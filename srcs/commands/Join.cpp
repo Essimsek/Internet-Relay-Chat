@@ -1,29 +1,38 @@
-#include "../../inc/Server.hpp"
-#include "../../inc/Channel.hpp"
 #include "../../inc/irc.hpp"
+#include "../../inc/Commands.hpp"
+#include "../../inc/Channel.hpp"
 
-/*
-void createNewChannel()
+
+void createNewChannel(Server &sv, Client &cl, std::string chName)
 {
+    Channel ch(chName, cl);
+    sv.chList.push_back(ch);
     //sv.ch.users.push_back(client)
 }
-void addToExistingChannel()
+void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
+{
+    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
+    {
+        if (it->getClientName() == cl.getClientName())
+        {
+            cl.sendMessage(":" + std::string(sv.hostname) + " 451 " + cl.getClientName() + " :The user already in the channel!\n");
+            return;
+        }
+    }
+    ch.users.push_back(cl);
+}
 
-void runJoin(Server &sv, Client &cl, std::vector <std::string> command)
+void Commands::runJoin(Server &sv, Client &cl, std::string chName)
 {
     int a = 0;
-    int chName = command[1];
+
     for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); ++it) {
-        //if chname = it->chName icine ekle
-        std::cout << it->chName << std::endl;
+        if (chName == it->chName)
+        {
+            addToExistingChannel(sv, cl, *it);
+            a = 1;
+        }
     }
-    //if (a == 0) createNewChannel
-    Channel ch(command[1].substr(0, command[1].size()-2), cl);
-    sv.chList.push_back(ch);
-    std::cout << "Channel list:" << std::endl;
-    for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); ++it) {
-        std::cout << "channel list elemani: ";
-        std::cout << it->chName << std::endl;
-    }
+    if (a == 0)
+        createNewChannel(sv, cl, chName);
 }
-*/

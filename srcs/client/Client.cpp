@@ -37,7 +37,7 @@ void Client::sendMessage(std::string message)
 
 void Client::setNickName(std::string nickname)
 {
-    this->nickname = nickname.substr(0, nickname.size() - 2);
+    this->nickname = nickname.substr(0, nickname.size() - DELIMETER);
 }
 
 void Client::setUserName(std::string username){

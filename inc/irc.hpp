@@ -9,4 +9,5 @@
 #include <vector>
 #include <unistd.h>
 #include <limits.h>
-#include <map>
+
+#define DELIMETER 1
