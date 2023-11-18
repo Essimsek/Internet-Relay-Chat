@@ -11,7 +11,7 @@ Client::Client(int server_socket, int num_clients){
 Client::~Client() {}
 
 std::string Client::getClientName() {
-    return ((this->nickname).substr(0, (this->nickname).size()-2));
+    return (this->nickname);
 }
 
 int Client::getClientFd() {
@@ -37,7 +37,7 @@ void Client::sendMessage(std::string message)
 
 void Client::setNickName(std::string nickname)
 {
-    this->nickname = nickname;
+    this->nickname = nickname.substr(0, nickname.size() - 2);
 }
 
 void Client::setUserName(std::string username){

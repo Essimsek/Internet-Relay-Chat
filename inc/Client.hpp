@@ -1,5 +1,7 @@
 #pragma once
+
 #include "irc.hpp"
+
 #define NOT_AUTH 0
 #define PASS_AUTH 1
 #define NICK_AUTH 2
