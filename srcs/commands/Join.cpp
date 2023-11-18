@@ -25,6 +25,11 @@ void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
         }
     }
     ch.users.push_back(cl);
+    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
+    {
+        if (it->getClientFd() != cl.getClientFd())
+            it->sendMessage(cl.username + "Has joined to channel " + ch.chName + "\n");
+    }
 }
 
 void Commands::runJoin(Server &sv, Client &cl, std::string chName)
