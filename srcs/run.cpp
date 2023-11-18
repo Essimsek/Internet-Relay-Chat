@@ -42,7 +42,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         //return (runCommand(sv, cl, command));
     if (command[0] == "PASS" && cl.getClientAuth() == NOT_AUTH)
     {
-        if (sv.checkPassword(command[1]) == 0)
+        if (sv.checkPassword(command[1]) == 0 && command.size() == 2)
         {
             cl.setClientAuth(PASS_AUTH);
             cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :PASSWORD CORRECT\n");
