@@ -10,4 +10,4 @@
 #include <unistd.h>
 #include <limits.h>
 
-#define DELIMETER 1
+#define DELIMETER 2
