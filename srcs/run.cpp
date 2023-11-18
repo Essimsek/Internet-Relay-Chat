@@ -1,22 +1,17 @@
 #include "../inc/Server.hpp"
 
-std::vector<std::string> splitString(std::string str, char splitter){
+std::vector<std::string> splitString(const std::string& str, char delimiter) {
+    std::istringstream stream(str);
     std::vector<std::string> result;
-    std::string current = ""; 
-    for(int i = 0; i < str.size(); i++){
-        if(str[i] == splitter){
-            if(current != ""){
-                result.push_back(current);
-                current = "";
-            } 
-            continue;
-        }
-        current += str[i];
+
+    std::string token;
+    while (getline(stream, token, delimiter)) {
+        result.push_back(token);
     }
-    if(current.size() != 0)
-        result.push_back(current);
+
     return result;
 }
+
 /*
 int runCommand(Server sv, Client cl, std::vector <std::string> command)
 {
