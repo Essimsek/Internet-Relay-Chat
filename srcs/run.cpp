@@ -1,5 +1,13 @@
 #include "../inc/Server.hpp"
 
+void    is_contain(std::string str, char c)
+{
+    if (str.find(c) != std::string::npos)
+        std::cout << "The string contains :"<<c<< std::endl;
+    else
+        std::cout << "The string not contains :"<<c<< std::endl;
+}
+
 std::vector<std::string> splitString(const std::string& str, char delimiter) {
     std::istringstream stream(str);
     std::vector<std::string> result;
