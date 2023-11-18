@@ -35,6 +35,6 @@ void Server::getInformation()
 int Server::checkPassword(std::string pw)
 {
     std::cout<<"Burdaa!!"<<std::endl;
-    pw = pw.substr(0, pw.size()-1);
+    pw = pw.substr(0, pw.size()-2);
     return (pw.compare(this->password));
 }

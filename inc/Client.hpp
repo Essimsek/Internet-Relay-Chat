@@ -15,7 +15,7 @@ class Client {
         socklen_t clientLen;
         struct sockaddr_in clAddress;
     public:
-        Client(int server_socket);
+        Client(int server_socket, int num_clients);
         ~Client();
         std::string getClientName();
         int getClientFd();

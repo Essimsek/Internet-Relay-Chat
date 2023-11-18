@@ -34,6 +34,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     std::cout << "Client <" << cl.getClientName() << ">: " << buffer << "::" << std::endl;
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
+    std::cout << command[0] << command[1] << std::endl;
     
     //if (cl.getClientAuth() == AUTH)
         //return (runCommand(sv, cl, command));

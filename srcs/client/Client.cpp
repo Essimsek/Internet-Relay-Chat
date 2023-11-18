@@ -1,8 +1,8 @@
 #include "../../inc/Client.hpp"
 
-Client::Client(int server_socket){
-    this->username = "kvirc4";
-    this->nickname = "kvirc4";
+Client::Client(int server_socket, int num_clients){
+    this->username = "client_" + std::to_string(num_clients);
+    this->nickname = "client_" + std::to_string(num_clients);
     this->auth = NOT_AUTH;
     this->clientLen = sizeof(this->clAddress);
     this->clientFd = accept(server_socket, (struct sockaddr *)&(this->clAddress), &this->clientLen);
@@ -11,7 +11,7 @@ Client::Client(int server_socket){
 Client::~Client() {}
 
 std::string Client::getClientName() {
-    return (this->nickname);
+    return ((this->nickname).substr(0, (this->nickname).size()-2));
 }
 
 int Client::getClientFd() {
