@@ -40,7 +40,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     
     //if (cl.getClientAuth() == AUTH)
         //return (runCommand(sv, cl, command));
-    if (command[0] == "PASS" && cl.getClientAuth() == NOT_AUTH)
+    if ((command[0] == "PASS" || command[0] == "PASS\n") && cl.getClientAuth() == NOT_AUTH)
     {
         if (sv.checkPassword(command[1]) == 0 && command.size() == 2)
         {
@@ -52,7 +52,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         else
             cl.sendMessage(":" + std::string(sv.hostname) + " 464 " + cl.getClientName() + " :PASSWORD INCORRECT\n");
     }
-    if (command[0] == "NICK")
+    if (command[0] == "NICK" || command[0] == "NICK\n")
     {
         if (cl.getClientAuth() == PASS_AUTH && command.size() == 2)
         {
@@ -65,7 +65,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         else
             cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + " :NICK usage 'NICK <nick name>'\n");
     }
-    if (command[0] == "USER")
+    if (command[0] == "USER" || command[0] == "USER\n")
     {
         if (cl.getClientAuth() == NICK_AUTH && command.size() >= 4)
         {
