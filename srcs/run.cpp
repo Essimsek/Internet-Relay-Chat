@@ -28,6 +28,7 @@ int runCommand(Server sv, Client cl, std::vector <std::string> command)
     return 1;
 }
 */
+
 int getClientCommand(Server &sv, Client &cl, std::string buffer)
 {
     std::cout << "Client <" << cl.getClientName() << ">: " << buffer << "::" << std::endl;
