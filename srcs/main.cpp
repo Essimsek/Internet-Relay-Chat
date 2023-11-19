@@ -18,7 +18,7 @@ int main(int ac, char **av)
     
     // Linux = HOST_NAME_MAX macos = _SC_HOST_NAME_MAX both of them equal = 72
     char buffer[72];
-    std::vector <Client> cls;
+    //std::vector <Client> cls;
     char hostname[72];
     gethostname(hostname, 64);
     Server sv;
@@ -45,17 +45,17 @@ int main(int ac, char **av)
             Client cl(server_socket, sv.num_clients);
             pollfds[sv.num_clients + 1].fd = cl.getClientFd();
             pollfds[sv.num_clients + 1].events = POLLIN;
-            cls.push_back(cl);
+            sv.clients.push_back(cl);
             sv.num_clients++;
         }
         for (int i = 1; i <= sv.num_clients; i++)
         {
             if (pollfds[i].revents & POLLIN) {
-                ssize_t a = recv(cls[i - 1].getClientFd(), buffer, sizeof(buffer), 0);
+                ssize_t a = recv(sv.clients[i - 1].getClientFd(), buffer, sizeof(buffer), 0);
                 if (a < 0)
                     ft_error("RECEIVE ERROR");
                 buffer[a] = '\0';
-                getClientCommand(sv, cls[i - 1], buffer);
+                getClientCommand(sv, sv.clients[i - 1], buffer);
             }
         }
     }

@@ -9,9 +9,9 @@ void createNewChannel(Server &sv, Client &cl, std::string chName)
     sv.chList.push_back(ch);
     cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
     cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + " +o " + cl.getClientName() + "\r\n");
-    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
-    cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " = " + chName + " :@" + cl.getClientName()+ "\r\n");
-    cl.sendMessage(":" + std::string(sv.hostname) + " 366 " + cl.getClientName() + " " + chName + " :End of /NAMES list\r\n");
+    //cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
+    //cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " = " + chName + " :@" + cl.getClientName()+ "\r\n");
+    //cl.sendMessage(":" + std::string(sv.hostname) + " 366 " + cl.getClientName() + " " + chName + " :End of /NAMES list\r\n");
     //sv.ch.users.push_back(client)
 }
 void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
