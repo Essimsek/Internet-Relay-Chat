@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Server.hpp"
+#include "irc.hpp"
 
 #define NOT_AUTH 0
 #define PASS_AUTH 1
@@ -15,7 +15,7 @@ class Client {
         socklen_t clientLen;
         struct sockaddr_in clAddress;
     public:
-        Client(int server_socket);
+        Client(int server_socket, int num_clients);
         ~Client();
         std::string getClientName();
         int getClientFd();
@@ -29,6 +29,5 @@ class Client {
         std::string hostname;
         std::string username;
         std::string servername;
-
 
 };

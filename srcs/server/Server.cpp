@@ -12,6 +12,7 @@ int Server::getServerFd() {
 
 void Server::setUpServer(int port, std::string pw) {
     this->password = pw;
+    this->num_clients = 0;
     this->serverFd = socket(AF_INET, SOCK_STREAM, 0);
     (this->server_address).sin_family = AF_INET;
     (this->server_address).sin_port = htons(port);
@@ -34,6 +35,7 @@ void Server::getInformation()
 
 int Server::checkPassword(std::string pw)
 {
-    pw = pw.substr(0, pw.size()-1);
+    std::cout<<"Burdaa!!"<<std::endl;
+    pw = pw.substr(0, pw.size()-DELIMETER);
     return (pw.compare(this->password));
 }

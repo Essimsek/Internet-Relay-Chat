@@ -42,7 +42,7 @@ int main(int ac, char **av)
             ft_error("POLL ERROR");
         if (pollfds[0].revents & POLLIN){
             std::cout << "server istek geldi" << std::endl;
-            Client cl(server_socket);
+            Client cl(server_socket, sv.num_clients);
             pollfds[sv.num_clients + 1].fd = cl.getClientFd();
             pollfds[sv.num_clients + 1].events = POLLIN;
             cls.push_back(cl);

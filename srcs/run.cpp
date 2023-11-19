@@ -1,12 +1,6 @@
 #include "../inc/Server.hpp"
-
-void    is_contain(std::string str, char c)
-{
-    if (str.find(c) != std::string::npos)
-        std::cout << "The string contains :"<<c<< std::endl;
-    else
-        std::cout << "The string not contains :"<<c<< std::endl;
-}
+#include <sstream>
+#include "../inc/Commands.hpp"
 
 std::vector<std::string> splitString(const std::string& str, char delimiter) {
     std::istringstream stream(str);
@@ -14,23 +8,18 @@ std::vector<std::string> splitString(const std::string& str, char delimiter) {
 
     std::string token;
     while (getline(stream, token, delimiter)) {
-        result.push_back(token);
+        if (!token.empty())
+            result.push_back(token);
     }
-
     return result;
 }
 
-/*
-int runCommand(Server sv, Client cl, std::vector <std::string> command)
+int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
 {
-    std::cout << "here" << std::endl;
-    if (command[0] == "JOIN" && command.size() == 2);
-    //    runJoin(sv, cl, command);
-    if (command[0] == "PRIVMSG" && command.size() >= 3);
-        //runPrivMsg(cl);
+    if (command[0] == "JOIN" && command.size() == 2)
+        Commands::runJoin(sv, cl, command[1].substr(0, command[1].size()-DELIMETER));
     return 1;
 }
-*/
 
 int getClientCommand(Server &sv, Client &cl, std::string buffer)
 {
@@ -38,8 +27,9 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
     
-    //if (cl.getClientAuth() == AUTH)
-        //return (runCommand(sv, cl, command));
+    if (cl.getClientAuth() == AUTH)
+        return (runCommand(sv, cl, command));
+
     if ((command[0] == "PASS" || command[0] == "PASS\n") && cl.getClientAuth() == NOT_AUTH)
     {
         if (sv.checkPassword(command[1]) == 0 && command.size() == 2)
