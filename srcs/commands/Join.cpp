@@ -25,10 +25,12 @@ void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
         }
     }
     ch.users.push_back(cl);
+    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + "\r\n");
+    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + " +o " + cl.getClientName() + "\r\n");
     for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
     {
         if (it->getClientFd() != cl.getClientFd())
-            it->sendMessage(cl.username + "Has joined to channel " + ch.chName + "\n");
+            it->sendMessage(cl.username + " Has joined to channel " + ch.chName + "\n");
     }
 }
 

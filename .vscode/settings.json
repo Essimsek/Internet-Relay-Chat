@@ -69,6 +69,7 @@
         "deque": "cpp",
         "map": "cpp",
         "memory_resource": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "__tree": "cpp"
     }
 }
