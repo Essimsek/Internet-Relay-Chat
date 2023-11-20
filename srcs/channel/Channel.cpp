@@ -9,3 +9,10 @@ Channel::Channel(std::string name, Client founder){
 std::string Channel::getChName() {
     return (this->chName);
 }
+
+int Channel::isInChannel(Client &cl) {
+	for (std::vector<Client>::iterator itt = this->users.begin(); itt != this->users.end(); ++itt)
+		if (itt->getClientName() == cl.getClientName())
+			return 1;
+	return 0;
+}

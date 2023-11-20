@@ -11,4 +11,5 @@ class Channel {
         std::vector <Client> users;
         std::vector <Client> admins;
         std::string getChName();
+		int			isInChannel(Client &cl);
 };

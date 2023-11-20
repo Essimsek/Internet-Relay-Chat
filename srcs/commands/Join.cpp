@@ -5,15 +5,16 @@
 
 void createNewChannel(Server &sv, Client &cl, std::string chName)
 {
-    Channel ch(chName, cl);
-    sv.chList.push_back(ch);
-    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
-    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + " +o " + cl.getClientName() + "\r\n");
-    //cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
-    //cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " = " + chName + " :@" + cl.getClientName()+ "\r\n");
-    //cl.sendMessage(":" + std::string(sv.hostname) + " 366 " + cl.getClientName() + " " + chName + " :End of /NAMES list\r\n");
-    //sv.ch.users.push_back(client)
+	if (chName.length() < 2 || chName[0] != '#')
+		cl.sendMessage(":" + std::string(sv.hostname) + " 451 " + cl.getClientName() + " :Channel name should start with <#> operator!\n");
+	else {
+    	Channel ch(chName, cl);
+    	sv.chList.push_back(ch);
+    	cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
+    	cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + " +o " + cl.getClientName() + "\r\n");
+	}
 }
+
 void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
 {
     for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
@@ -26,7 +27,6 @@ void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
     }
     ch.users.push_back(cl);
     cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + "\r\n");
-    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + " +o " + cl.getClientName() + "\r\n");
     for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
     {
         if (it->getClientFd() != cl.getClientFd())
