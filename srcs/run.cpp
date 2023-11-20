@@ -18,6 +18,8 @@ int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
 {
     if (command[0] == "JOIN" && command.size() == 2)
         Commands::runJoin(sv, cl, command[1].substr(0, command[1].size()-DELIMETER));
+    if (command[0] == "PRIVMSG" && command.size() >= 3)
+        Commands::runPrivMsg(sv, cl, command);
     return 1;
 }
 
@@ -35,7 +37,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         if (sv.checkPassword(command[1]) == 0 && command.size() == 2)
         {
             cl.setClientAuth(PASS_AUTH);
-            cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :PASSWORD CORRECT\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " :PASSWORD CORRECT\n");
         }
         else if (command.size() != 2)
             cl.sendMessage(":" + std::string(sv.hostname) + " 464 " + cl.getClientName() + "PASS usage 'PASS <password>'\n");
@@ -48,10 +50,10 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         {
             cl.setNickName(command[1]);
             cl.setClientAuth(NICK_AUTH);
-            cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :Nickname is saved\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " :Nickname is saved\n");
         }
         else if (cl.getClientAuth() == NOT_AUTH)
-            cl.sendMessage(":" + std::string(sv.hostname) + " 000 " + cl.getClientName() + " :You must enter password first!\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + " :You must enter password first!\n");
         else
             cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + " :NICK usage 'NICK <nick name>'\n");
     }
@@ -66,9 +68,9 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
             cl.sendMessage(":" + std::string(sv.hostname) + " 001 " + cl.getClientName() + " :Welcome to karsimIRC\n");
         }
         else if (cl.getClientAuth() == PASS_AUTH)
-            cl.sendMessage(":" + std::string(sv.hostname) + " 000 " + cl.getClientName() + " :You must enter nickname!\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + " :You must enter nickname!\n");
         else if (cl.getClientAuth() == NOT_AUTH)
-            cl.sendMessage(":" + std::string(sv.hostname) + " 000 " + cl.getClientName() + " :You must enter nickname and password!\n");
+            cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + " :You must enter nickname and password!\n");
         else
             cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + "USER usage 'USER <user name> <host name> <serv name>'\n");
     }

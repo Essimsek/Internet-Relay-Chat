@@ -1,6 +1,6 @@
-#include "../inc/irc.hpp"
-#include "../inc/Client.hpp"
-#include "../inc/Server.hpp"
+#include "irc.hpp"
+#include "Client.hpp"
+#include "Server.hpp"
 
 
 class Commands {
@@ -8,5 +8,5 @@ class Commands {
 
     public:
         static void     runJoin(Server &sv, Client &cl, std::string chName);
-
+        static void     runPrivMsg(Server &sv, Client &from, std::vector <std::string> command);
 };
