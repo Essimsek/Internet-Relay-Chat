@@ -1,22 +1,10 @@
 #include "../../inc/irc.hpp"
 #include "../../inc/Commands.hpp"
 #include "../../inc/Channel.hpp"
-
-#define MSGSTART 2
-
-std::string getMessage(const std::vector<std::string> &strings) {
-    std::string result;
-    for (int i = MSGSTART; i < strings.size(); ++i) {
-        result += strings[i];
-        if (i < strings.size() - 1) {
-            result += " ";
-        }
-    }
-    return result;
-}
+#include "../../inc/Utils.hpp"
 
 int writeToUser(Server &sv, Client &cl, std::vector <std::string> command) {
-    std::string msg = getMessage(command);
+    std::string msg = Utils::getMessage(command);
     for(std::vector<Client>::iterator it = sv.clients.begin(); it != sv.clients.end(); ++it)
         if (it->getClientName() == command[1] && it->getClientFd() != cl.getClientFd())
         {
@@ -28,7 +16,7 @@ int writeToUser(Server &sv, Client &cl, std::vector <std::string> command) {
 
 void writeToChannel(Server &sv, Client &from, std::vector <std::string> command) {
 	std::string msg;
-	msg = getMessage(command);
+	msg = Utils::getMessage(command);
 
     int control = 0;
 	for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); ++it)

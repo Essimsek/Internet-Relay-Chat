@@ -1,5 +1,6 @@
 #include "../../inc/Server.hpp"
 #include "../../inc/Commands.hpp"
+#include "../../inc/Utils.hpp"
 
 Server::Server() {
     this->num_clients = 0;
@@ -36,7 +37,6 @@ void Server::getInformation()
 
 int Server::checkPassword(std::string pw)
 {
-    std::cout<<"Burdaa!!"<<std::endl;
-    pw = Commands::trimsTring(pw);
+    pw = Utils::trimString(pw);
     return (pw.compare(this->password));
 }

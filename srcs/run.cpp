@@ -1,6 +1,6 @@
 #include "../inc/Server.hpp"
-#include <sstream>
 #include "../inc/Commands.hpp"
+#include "../inc/Utils.hpp"
 
 std::vector<std::string> splitString(const std::string& str, char delimiter) {
     std::istringstream stream(str);
@@ -17,9 +17,13 @@ std::vector<std::string> splitString(const std::string& str, char delimiter) {
 int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
 {
     if (command[0] == "JOIN" && command.size() == 2)
-        Commands::runJoin(sv, cl, Commands::trimsTring(command[1]));
+        Commands::runJoin(sv, cl, Utils::trimString(command[1]));
     if (command[0] == "PRIVMSG" && command.size() >= 3)
         Commands::runPrivMsg(sv, cl, command);
+    /*
+    if (command[0] == "KICK" && command.size() == 3)
+        Commands::runKick(sv, cl, command);
+    */
     return 1;
 }
 

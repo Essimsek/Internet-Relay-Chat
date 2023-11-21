@@ -9,3 +9,8 @@
 #include <vector>
 #include <unistd.h>
 #include <limits.h>
+#include <sstream>
+#include <string>
+
+#define MSGSTART 2
+#define TEXTSTART 3

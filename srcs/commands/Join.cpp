@@ -2,15 +2,6 @@
 #include "../../inc/Commands.hpp"
 #include "../../inc/Channel.hpp"
 
-// This for kvirc's stupid behavior
-std::string Commands::trimsTring(std::string string)
-{
-    size_t pos = string.find_last_of("\t\r\n");
-    if (pos != std::string::npos)
-        return (string.substr(0, pos));
-    return string;
-}
-
 void createNewChannel(Server &sv, Client &cl, std::string chName)
 {
 	if (chName.length() < 2 || chName[0] != '#')
