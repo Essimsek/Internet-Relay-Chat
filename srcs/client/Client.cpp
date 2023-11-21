@@ -1,4 +1,5 @@
 #include "../../inc/Client.hpp"
+#include "../../inc/Commands.hpp"
 
 Client::Client(int server_socket, int num_clients){
     this->username = "client_" + std::to_string(num_clients);
@@ -37,7 +38,7 @@ void Client::sendMessage(std::string message)
 
 void Client::setNickName(std::string nickname)
 {
-    this->nickname = nickname.substr(0, nickname.size() - DELIMETER);
+    this->nickname = Commands::trimsTring(nickname);
 }
 
 void Client::setUserName(std::string username){

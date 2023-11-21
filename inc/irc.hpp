@@ -9,5 +9,3 @@
 #include <vector>
 #include <unistd.h>
 #include <limits.h>
-
-#define DELIMETER 2

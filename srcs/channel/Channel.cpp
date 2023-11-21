@@ -12,7 +12,7 @@ std::string Channel::getChName() {
 
 int Channel::isInChannel(Client &cl) {
 	for (std::vector<Client>::iterator itt = this->users.begin(); itt != this->users.end(); ++itt)
-		if (itt->getClientName() == cl.getClientName())
+		if (itt->getClientFd() == cl.getClientFd())
 			return 1;
 	return 0;
 }

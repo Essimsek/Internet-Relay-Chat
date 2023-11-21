@@ -2,6 +2,14 @@
 #include "../../inc/Commands.hpp"
 #include "../../inc/Channel.hpp"
 
+// This for kvirc's stupid behavior
+std::string Commands::trimsTring(std::string string)
+{
+    size_t pos = string.find_last_of("\t\r\n");
+    if (pos != std::string::npos)
+        return (string.substr(0, pos));
+    return string;
+}
 
 void createNewChannel(Server &sv, Client &cl, std::string chName)
 {
@@ -19,7 +27,7 @@ void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
 {
     for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
     {
-        if (it->getClientName() == cl.getClientName())
+        if (it->getClientFd() == cl.getClientFd())
         {
             cl.sendMessage(":" + std::string(sv.hostname) + " 451 " + cl.getClientName() + " :The user already in the channel!\n");
             return;

@@ -17,7 +17,7 @@ std::vector<std::string> splitString(const std::string& str, char delimiter) {
 int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
 {
     if (command[0] == "JOIN" && command.size() == 2)
-        Commands::runJoin(sv, cl, command[1].substr(0, command[1].size()-DELIMETER));
+        Commands::runJoin(sv, cl, Commands::trimsTring(command[1]));
     if (command[0] == "PRIVMSG" && command.size() >= 3)
         Commands::runPrivMsg(sv, cl, command);
     return 1;
