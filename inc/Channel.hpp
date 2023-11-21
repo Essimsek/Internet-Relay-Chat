@@ -12,4 +12,5 @@ class Channel {
         std::vector <Client> admins;
         std::string getChName();
 		int			isInChannel(Client &cl);
+        void        removeClient(Client* client);
 };

@@ -16,3 +16,15 @@ int Channel::isInChannel(Client &cl) {
 			return 1;
 	return 0;
 }
+
+void Channel::removeClient(Client* client)
+{
+    for (std::vector<Client>::iterator cl = this->users.begin(); cl != this->users.end(); ++cl)
+    {
+        if (cl->getClientFd() == client->getClientFd())
+        {
+            this->users.erase(cl);
+            return;
+        }
+    }
+}
