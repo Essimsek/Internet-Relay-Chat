@@ -1,6 +1,7 @@
 #include "../../inc/irc.hpp"
 #include "../../inc/Commands.hpp"
 #include "../../inc/Channel.hpp"
+#include "../../inc/Utils.hpp"
 
 /*
 // "KICK usage 'KICK <channel> <user> <text>'"

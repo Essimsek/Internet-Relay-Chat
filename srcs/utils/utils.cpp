@@ -10,9 +10,9 @@ namespace Utils {
 }
 
 namespace Utils {
-    std::string getMessage(const std::vector<std::string> &strings) {
+    std::string getMessage(const std::vector<std::string> &strings, int msgPos) {
         std::string result;
-        for (int i = MSGSTART; i < strings.size(); ++i) {
+        for (int i = msgPos; i < strings.size(); ++i) {
             result += strings[i];
             if (i < strings.size() - 1) {
                 result += " ";
