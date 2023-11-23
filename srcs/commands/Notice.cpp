@@ -25,7 +25,7 @@ static void writeToChannel(Server &sv, Client &from, std::vector <std::string> c
         {
             for (std::vector<Client>::iterator itt = it->users.begin(); itt != it->users.end(); ++itt)
                 if (itt->getClientFd() != from.getClientFd())
-                    itt->sendMessage(":" + from.getClientName() + "!" + from.username + "@" + from.hostname + " PRIVMSG " + command[1] + " " + msg);
+                    itt->sendMessage(":" + from.getClientName() + "!" + from.username + "@" + from.hostname + " NOTICE " + command[1] + " " + msg);
             control = 1;                    
 			break;
         }

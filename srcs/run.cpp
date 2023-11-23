@@ -20,6 +20,8 @@ int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
         Commands::runJoin(sv, cl, Utils::trimString(command[1]));
     if (command[0] == "PRIVMSG" && command.size() >= 3)
         Commands::runPrivMsg(sv, cl, command);
+    if (command[0] == "NOTICE" && command.size() >= 3)
+        Commands::runNotice(sv, cl, command);
     if (command[0] == "KICK" && command.size() >= 3)
         Commands::runKick(sv, cl, command);
     return 1;
