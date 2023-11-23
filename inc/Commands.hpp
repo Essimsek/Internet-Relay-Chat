@@ -11,4 +11,5 @@ class Commands {
 		static void         runPrivMsg(Server &sv, Client &from, std::vector <std::string> command);
 		static void         runKick(Server &sv, Client &cl, std::vector <std::string> command);
 		static void			runNotice(Server &sv, Client &from, std::vector <std::string> command);
+		static void 		runQuit(Server &sv, Client &cl);
 };

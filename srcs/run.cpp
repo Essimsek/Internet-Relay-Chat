@@ -24,6 +24,8 @@ int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
         Commands::runNotice(sv, cl, command);
     if (command[0] == "KICK" && command.size() >= 3)
         Commands::runKick(sv, cl, command);
+    if (Utils::trimString(command[0]) == "QUIT" && command.size() == 1)
+        Commands::runQuit(sv, cl);
     return 1;
 }
 
@@ -33,9 +35,6 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
     std::vector <std::string> command = splitString(buffer, ' ');
     
-    if (cl.getClientAuth() == AUTH)
-        return (runCommand(sv, cl, command));
-
     if ((command[0] == "PASS" || command[0] == "PASS\n") && cl.getClientAuth() == NOT_AUTH)
     {
         if (sv.checkPassword(command[1]) == 0 && command.size() == 2)
@@ -50,7 +49,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
     }
     if (command[0] == "NICK" || command[0] == "NICK\n")
     {
-        if (cl.getClientAuth() == PASS_AUTH && command.size() == 2)
+        if (cl.getClientAuth() >= PASS_AUTH && command.size() == 2)
         {
 			if (command[1][0] == '#') {
 				cl.sendMessage(":" + std::string(sv.hostname) + " 451 " + cl.getClientName() + " :Client name cannot start with <#>!\n");
@@ -82,5 +81,8 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
         else
             cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + "USER usage 'USER <user name> <host name> <serv name>'\n");
     }
+    if (cl.getClientAuth() == AUTH)
+        return (runCommand(sv, cl, command));
+
     return 1;
 }

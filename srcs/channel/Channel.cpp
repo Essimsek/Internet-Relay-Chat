@@ -27,4 +27,16 @@ void Channel::removeClient(Client* client)
             return;
         }
     }
+    for (std::vector<Client>::iterator cl = this->admins.begin(); cl != this->admins.end(); ++cl)
+    {
+        if (cl->getClientFd() == client->getClientFd())
+        {
+            this->admins.erase(cl);
+            return;
+        }
+    }
+    if (this->users.size() == 0);
+        //sv.removeChannel();
+    else if (this->admins.size() == 0)
+        this->admins.push_back(this->users[0]);
 }

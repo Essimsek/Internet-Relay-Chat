@@ -19,6 +19,7 @@ void Server::setUpServer(int port, std::string pw) {
     (this->server_address).sin_family = AF_INET;
     (this->server_address).sin_port = htons(port);
     (this->server_address).sin_addr.s_addr = INADDR_ANY;
+    gethostname(this->hostname, 64);
 }
 
 struct sockaddr_in Server::getServerAddress(){

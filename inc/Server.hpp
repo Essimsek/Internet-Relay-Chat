@@ -21,5 +21,5 @@ class Server {
         int num_clients;
         std::vector <Channel> chList;
         std::vector <Client> clients;
-        char *hostname;
+        char hostname[64];
 };

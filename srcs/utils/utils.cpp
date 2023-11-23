@@ -2,7 +2,7 @@
 
 namespace Utils {
     std::string trimString(const std::string& string) {
-        size_t pos = string.find_last_of("\t\r\n");
+        size_t pos = string.find_first_of("\t\r\n");
         if (pos != std::string::npos)
             return (string.substr(0, pos));
         return string;
