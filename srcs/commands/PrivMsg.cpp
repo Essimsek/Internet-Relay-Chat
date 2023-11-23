@@ -3,7 +3,7 @@
 #include "../../inc/Channel.hpp"
 #include "../../inc/Utils.hpp"
 
-int writeToUser(Server &sv, Client &cl, std::vector <std::string> command) {
+static int writeToUser(Server &sv, Client &cl, std::vector <std::string> command) {
     std::string msg = Utils::getMessage(command, MSGSTART);
     for(std::vector<Client>::iterator it = sv.clients.begin(); it != sv.clients.end(); ++it)
         if (it->getClientName() == command[1] && it->getClientFd() != cl.getClientFd())
@@ -14,7 +14,7 @@ int writeToUser(Server &sv, Client &cl, std::vector <std::string> command) {
     return 0;
 }
 
-void writeToChannel(Server &sv, Client &from, std::vector <std::string> command) {
+static void writeToChannel(Server &sv, Client &from, std::vector <std::string> command) {
 	std::string msg;
 	msg = Utils::getMessage(command, MSGSTART);
 
@@ -40,7 +40,7 @@ void     Commands::runPrivMsg(Server &sv, Client &from, std::vector <std::string
 	if (command[1][0] == '#')
 		writeToChannel(sv, from, command);
 	else if(writeToUser(sv, from, command))
-		;
+        from.sendMessage("message sent successfully\n");
 	else
 		from.sendMessage("No client found\n");
 }
