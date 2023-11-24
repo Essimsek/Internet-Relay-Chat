@@ -12,10 +12,13 @@ void ft_error(std::string str)
 int mainLoop(void) {
     ssize_t a;
     char buffer[128];
+    struct pollfd pd;
+    struct pollfd pd2;
 
-    sv.pollfds[0].fd = sv.getServerFd();
-    sv.pollfds[0].events = POLLIN;
-    sv.pollfds[0].revents = 0;
+    pd.fd = sv.getServerFd();
+    pd.events = POLLIN;
+    pd.revents = 0;
+    sv.pollfds.push_back(pd);
     while (1)
     {
         int n = poll(&sv.pollfds[0], sv.num_clients + 1, -1);
@@ -23,8 +26,10 @@ int mainLoop(void) {
             ft_error("POLL ERROR");
         if (sv.pollfds[0].revents & POLLIN){
             Client cl(sv.getServerFd(), sv.num_clients);
-            sv.pollfds[sv.num_clients + 1].fd = cl.getClientFd();
-            sv.pollfds[sv.num_clients + 1].events = POLLIN;
+
+            pd2.fd = cl.getClientFd();
+            pd2.events = POLLIN;
+            sv.pollfds.push_back(pd2);
             sv.clients.push_back(cl);
             sv.num_clients++;
         }
@@ -40,8 +45,7 @@ int mainLoop(void) {
                 else if (a == 0)
                 {
                     Commands::runQuit(sv, sv.clients[i - 1]);
-                    //close(sv.pollfds[i].fd);
-                    sv.pollfds[i].fd = -1;
+                    sv.pollfds.erase(sv.pollfds.begin() + i);
                     continue;
                 }
                 buffer[a] = '\0';

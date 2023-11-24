@@ -27,7 +27,7 @@ class Server {
         std::vector <Channel> chList;
         std::vector <Client> clients;
         char hostname[64];
-        struct pollfd pollfds[MAX_CLIENTS + 1];
+        std::vector <struct pollfd> pollfds;
 };
 
 int getClientCommand(Server &sv, Client &cl, std::string buffer);
