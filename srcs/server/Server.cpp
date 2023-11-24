@@ -50,7 +50,8 @@ int Server::IsAlreadyInUse(std::string nickName, Client &cl)
     {
         if (it->getClientName() == nickName)
         {
-            cl.sendMessage("The nickname already in use\n");
+            // :Cerens-MacBook-Air.local 433 kvirc5 :esimsek :Nickname is already in use
+            cl.sendMessage(std::string(this->hostname) + " 433 " + ":" + nickName + " :Nickname is already in use\n");
             return (0);
         }
     }
