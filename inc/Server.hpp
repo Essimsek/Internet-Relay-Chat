@@ -17,8 +17,8 @@ class Server {
         struct  sockaddr_in getServerAddress();
         int     checkPassword(std::string pw);
         void    getInformation();
-        void    addChannel(Channel ch);
-        int num_clients;
+        int     IsAlreadyInUse(std::string nickName, Client &cl);
+        int     num_clients;
         std::vector <Channel> chList;
         std::vector <Client> clients;
         char hostname[64];

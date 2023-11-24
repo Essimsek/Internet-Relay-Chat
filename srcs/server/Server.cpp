@@ -1,6 +1,7 @@
 #include "../../inc/Server.hpp"
 #include "../../inc/Commands.hpp"
 #include "../../inc/Utils.hpp"
+#include "../../inc/Client.hpp"
 
 Server::Server() {
     this->num_clients = 0;
@@ -40,4 +41,18 @@ int Server::checkPassword(std::string pw)
 {
     pw = Utils::trimString(pw);
     return (pw.compare(this->password));
+}
+
+// Is the nickname already in use ?
+int Server::IsAlreadyInUse(std::string nickName, Client &cl)
+{
+    for (std::vector<Client>::iterator it = this->clients.begin(); it != this->clients.end(); it++)
+    {
+        if (it->getClientName() == nickName)
+        {
+            cl.sendMessage("The nickname already in use\n");
+            return (0);
+        }
+    }
+    return (1);
 }

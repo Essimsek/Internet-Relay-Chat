@@ -55,9 +55,12 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
 				cl.sendMessage(":" + std::string(sv.hostname) + " 451 " + cl.getClientName() + " :Client name cannot start with <#>!\n");
 				return 0;
 			}
-            cl.setNickName(command[1]);
-            cl.setClientAuth(NICK_AUTH);
-            cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " :Nickname is saved\n");
+            if (sv.IsAlreadyInUse(Utils::trimString(command[1]), cl))
+            {
+                cl.setNickName(command[1]);
+                cl.setClientAuth(NICK_AUTH);
+                cl.sendMessage(":" + std::string(sv.hostname) + " 353 " + cl.getClientName() + " :Nickname is saved\n");
+            }
         }
         else if (cl.getClientAuth() == NOT_AUTH)
             cl.sendMessage(":" + std::string(sv.hostname) + " 461 " + cl.getClientName() + " :You must enter password first!\n");
