@@ -50,7 +50,7 @@ void	Commands::runKick(Server &sv, Client &cl, std::vector <std::string> command
 			Client *client = isThereMember(foundChannel->users, cl, userName);
 			if (client)
 			{
-				client->sendMessage("<" + chName + "> " + "You've been kicked from the channel.\n" + text);
+				client->sendMessage("KICK " + chName + " " + userName + " :" + text);
 				foundChannel->removeClient(client);
 				return ;
 			}
