@@ -59,7 +59,7 @@ int Server::IsAlreadyInUse(std::string nickName, Client &cl)
     {
         if (it->getClientName() == nickName)
         {
-            cl.sendMessage(std::string(this->hostname) + " 433 " + ":" + nickName + " :Nickname is already in use\n");
+            cl.sendMessage(":" + std::string(this->hostname) + " 433 " + ":" + nickName + " :Nickname is already in use\n");
             return (0);
         }
     }

@@ -17,7 +17,7 @@ void	Commands::runKick(Server &sv, Client &cl, std::vector <std::string> command
 			Client *client = foundChannel->isThereMember(foundChannel->users, cl, userName);
 			if (client)
 			{
-				client->sendMessage("KICK " + chName + " " + userName + " :" + text);
+				client->sendMessage("KICK " + chName + " " + cl.getClientName() + " :" + text);
 				foundChannel->removeClient(client);
 				return ;
 			}

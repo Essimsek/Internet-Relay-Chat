@@ -2,18 +2,6 @@
 #include "../inc/Commands.hpp"
 #include "../inc/Utils.hpp"
 
-std::vector<std::string> splitString(const std::string& str, char delimiter) {
-    std::istringstream stream(str);
-    std::vector<std::string> result;
-
-    std::string token;
-    while (getline(stream, token, delimiter)) {
-        if (!token.empty())
-            result.push_back(token);
-    }
-    return result;
-}
-
 int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
 {
     if (command[0] == "JOIN" && command.size() == 2)
@@ -26,7 +14,6 @@ int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
         Commands::runKick(sv, cl, command);
     if (Utils::trimString(command[0]) == "QUIT" && command.size() == 1)
         Commands::runQuit(sv, cl);
-    // ASSADM <chname> <nickName> <text>
     if (command[0] == "ASSADM" && command.size() >= 3)
         Commands::RunAssignAdmin(sv, cl, command);
     return 1;
@@ -36,7 +23,7 @@ int getClientCommand(Server &sv, Client &cl, std::string buffer)
 {
     std::cout << "Client <" << cl.getClientName() << ">: " << buffer << "::" << std::endl;
     std::cout << "AUTH: " << cl.getClientAuth() << std::endl;
-    std::vector <std::string> command = splitString(buffer, ' ');
+    std::vector <std::string> command = Utils::splitString(buffer, ' ');
     
     if ((command[0] == "PASS" || command[0] == "PASS\n") && cl.getClientAuth() == NOT_AUTH)
     {

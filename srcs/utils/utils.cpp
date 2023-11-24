@@ -21,3 +21,17 @@ namespace Utils {
         return result;
     }
 }
+
+namespace Utils {
+    std::vector<std::string> splitString(const std::string& str, char delimiter) {
+        std::istringstream stream(str);
+        std::vector<std::string> result;
+
+        std::string token;
+        while (getline(stream, token, delimiter)) {
+            if (!token.empty())
+                result.push_back(token);
+        }
+        return result;
+    }
+}
