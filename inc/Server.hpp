@@ -18,6 +18,7 @@ class Server {
         int     checkPassword(std::string pw);
         void    getInformation();
         int     IsAlreadyInUse(std::string nickName, Client &cl);
+        Channel *isThereChannel(Client &cl, const std::string &chName);
         int     num_clients;
         std::vector <Channel> chList;
         std::vector <Client> clients;

@@ -17,26 +17,56 @@ int Channel::isInChannel(Client &cl) {
 	return 0;
 }
 
+int Channel::isAdmin(Client &cl)
+{
+	for (std::vector<Client>::iterator admin = this->admins.begin(); admin != this->admins.end(); admin++)
+	{
+		if (admin->getClientFd() == cl.getClientFd())
+			return (1);
+	}
+	return (0);
+}
+
+Client	*Channel::isThereMember(std::vector<Client> &clients, Client &admin, std::string &userName)
+{
+    for (std::vector<Client>::iterator cl = clients.begin(); cl != clients.end(); cl++)
+	{
+		if (cl->getClientName() == userName && admin.getClientFd() != cl->getClientFd())
+			return &(*cl);
+	}
+	return (NULL); 
+}
+
 void Channel::removeClient(Client* client)
 {
-    for (std::vector<Client>::iterator cl = this->users.begin(); cl != this->users.end(); ++cl)
+    for (std::vector<Client>::iterator cl = this->admins.begin(); cl != this->admins.end(); )
+    {
+        if (cl->getClientName() == client->getClientName())
+        {
+            cl = this->admins.erase(cl);
+        }
+        else
+            ++cl;
+    }
+
+    for (std::vector<Client>::iterator cl = this->users.begin(); cl != this->users.end(); )
     {
         if (cl->getClientFd() == client->getClientFd())
         {
-            this->users.erase(cl);
+            cl = this->users.erase(cl);
             return;
         }
+        else
+            ++cl;
     }
-    for (std::vector<Client>::iterator cl = this->admins.begin(); cl != this->admins.end(); ++cl)
+
+    if (this->users.empty())
     {
-        if (cl->getClientFd() == client->getClientFd())
-        {
-            this->admins.erase(cl);
-            return;
-        }
-    }
-    if (this->users.size() == 0);
+        ;
         //sv.removeChannel();
-    else if (this->admins.size() == 0)
+    }
+    else if (this->admins.empty())
+    {
         this->admins.push_back(this->users[0]);
+    }
 }

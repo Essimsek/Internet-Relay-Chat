@@ -37,20 +37,28 @@ void Server::getInformation()
     std::cout<<"Server address    : "<<(this->server_address).sin_addr.s_addr<<std::endl;
 }
 
+Channel*	Server::isThereChannel(Client &cl, const std::string &chName)
+{
+    for (std::vector<Channel>::iterator ch = this->chList.begin(); ch != this->chList.end(); ++ch)
+	{
+        if (ch->chName == chName)
+            return &(*ch);
+    }
+    return NULL;
+}
+
 int Server::checkPassword(std::string pw)
 {
     pw = Utils::trimString(pw);
     return (pw.compare(this->password));
 }
 
-// Is the nickname already in use ?
 int Server::IsAlreadyInUse(std::string nickName, Client &cl)
 {
     for (std::vector<Client>::iterator it = this->clients.begin(); it != this->clients.end(); it++)
     {
         if (it->getClientName() == nickName)
         {
-            // :Cerens-MacBook-Air.local 433 kvirc5 :esimsek :Nickname is already in use
             cl.sendMessage(std::string(this->hostname) + " 433 " + ":" + nickName + " :Nickname is already in use\n");
             return (0);
         }

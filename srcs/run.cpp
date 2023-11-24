@@ -26,6 +26,9 @@ int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
         Commands::runKick(sv, cl, command);
     if (Utils::trimString(command[0]) == "QUIT" && command.size() == 1)
         Commands::runQuit(sv, cl);
+    // ASSADM <chname> <nickName> <text>
+    if (command[0] == "ASSADM" && command.size() >= 3)
+        Commands::RunAssignAdmin(sv, cl, command);
     return 1;
 }
 
