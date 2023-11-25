@@ -20,6 +20,7 @@ void	Commands::RunAssignAdmin(Server &sv, Client &cl, std::vector<std::string> c
 			{
 				foundChannel->admins.push_back(*client);
 				client->sendMessage("ASSADM " + chName + " " + userName + " :" + text);
+				client->sendMessage(":" + client->getClientName() + "!" + client->username + "@" + client->hostname + " MODE " + chName + " +o " + client->getClientName() + "\r\n");
 				return ;
 			}
 			else

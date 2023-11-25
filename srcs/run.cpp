@@ -12,7 +12,7 @@ int runCommand(Server &sv, Client &cl, std::vector <std::string> command)
         Commands::runNotice(sv, cl, command);
     if (command[0] == "KICK" && command.size() >= 3)
         Commands::runKick(sv, cl, command);
-    if (Utils::trimString(command[0]) == "QUIT" && command.size() == 1)
+    if (Utils::trimString(command[0]) == "QUIT" && command.size() >= 1)
         Commands::runQuit(sv, cl);
     if (command[0] == "ASSADM" && command.size() >= 3)
         Commands::RunAssignAdmin(sv, cl, command);

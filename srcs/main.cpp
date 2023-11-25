@@ -37,12 +37,7 @@ int mainLoop(void) {
         {
             if (sv.pollfds[i].revents & POLLIN) {
                 a = recv(sv.clients[i - 1].getClientFd(), buffer, sizeof(buffer), 0);
-                if (a < 0)
-                {
-                    std::cout << "Client: " << i - 1 << std::endl;
-                    ft_error("RECEIVE ERROR");
-                }
-                else if (a == 0)
+                if (a <= 0)
                 {
 					std::cout << "Client cikti: " << sv.clients[i - 1].getClientName() << std::endl;
                     Commands::runQuit(sv, sv.clients[i - 1]);

@@ -15,7 +15,7 @@ namespace Utils {
         for (int i = msgPos; i < strings.size(); ++i) {
             result += strings[i];
             if (i < strings.size() - 1) {
-                result += " ";
+                result += "_";
             }
         }
         return result;
