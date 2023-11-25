@@ -44,12 +44,14 @@ int mainLoop(void) {
                 }
                 else if (a == 0)
                 {
+					std::cout << "Client cikti: " << sv.clients[i - 1].getClientName() << std::endl;
                     Commands::runQuit(sv, sv.clients[i - 1]);
-                    sv.pollfds.erase(sv.pollfds.begin() + i);
                     continue;
                 }
-                buffer[a] = '\0';
-                getClientCommand(sv, sv.clients[i - 1], buffer);
+				else {
+               		buffer[a] = '\0';
+               		getClientCommand(sv, sv.clients[i - 1], buffer);
+				}
             }
         }
     }

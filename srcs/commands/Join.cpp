@@ -10,13 +10,13 @@ void createNewChannel(Server &sv, Client &cl, std::string chName)
     	Channel ch(chName, cl);
     	sv.chList.push_back(ch);
     	cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + "\r\n");
-    	cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + chName + " +o " + cl.getClientName() + "\r\n");
+    	cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " MODE " + chName + " +o " + cl.getClientName() + "\r\n");
 	}
 }
 
 void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
 {
-    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
+    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); it++)
     {
         if (it->getClientFd() == cl.getClientFd())
         {
@@ -26,7 +26,7 @@ void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
     }
     ch.users.push_back(cl);
     cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + "\r\n");
-    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); ++it)
+    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); it++)
     {
         if (it->getClientFd() != cl.getClientFd())
             it->sendMessage(cl.username + " Has joined to channel " + ch.chName + "\n");
@@ -37,7 +37,7 @@ void Commands::runJoin(Server &sv, Client &cl, std::string chName)
 {
     int a = 0;
 
-    for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); ++it) {
+    for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); it++) {
         if (chName == it->chName)
         {
             addToExistingChannel(sv, cl, *it);

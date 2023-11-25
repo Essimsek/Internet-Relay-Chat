@@ -5,7 +5,7 @@
 
 static int writeToUser(Server &sv, Client &cl, std::vector <std::string> command) {
     std::string msg = Utils::getMessage(command, MSGSTART);
-    for(std::vector<Client>::iterator it = sv.clients.begin(); it != sv.clients.end(); ++it)
+    for(std::vector<Client>::iterator it = sv.clients.begin(); it != sv.clients.end(); it++)
         if (it->getClientName() == command[1] && it->getClientFd() != cl.getClientFd())
         {
             it->sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " NOTICE " + command[1] + " " + msg);
@@ -19,11 +19,11 @@ static void writeToChannel(Server &sv, Client &from, std::vector <std::string> c
 	msg = Utils::getMessage(command, MSGSTART);
 
     int control = 0;
-	for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); ++it)
+	for(std::vector<Channel>::iterator it = sv.chList.begin(); it != sv.chList.end(); it++)
 	{
         if (command[1] == it[0].chName && it->isInChannel(from))
         {
-            for (std::vector<Client>::iterator itt = it->users.begin(); itt != it->users.end(); ++itt)
+            for (std::vector<Client>::iterator itt = it->users.begin(); itt != it->users.end(); itt++)
                 if (itt->getClientFd() != from.getClientFd())
                     itt->sendMessage(":" + from.getClientName() + "!" + from.username + "@" + from.hostname + " NOTICE " + command[1] + " " + msg);
             control = 1;                    
