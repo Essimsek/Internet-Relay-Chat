@@ -39,7 +39,6 @@ int mainLoop(void) {
                 a = recv(sv.clients[i - 1].getClientFd(), buffer, sizeof(buffer), 0);
                 if (a <= 0)
                 {
-					std::cout << "Client cikti: " << sv.clients[i - 1].getClientName() << std::endl;
                     Commands::runQuit(sv, sv.clients[i - 1]);
                     continue;
                 }

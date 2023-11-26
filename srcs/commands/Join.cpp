@@ -25,12 +25,14 @@ void addToExistingChannel(Server &sv, Client &cl, Channel &ch)
         }
     }
     ch.users.push_back(cl);
-    cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + "\r\n");
-    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); it++)
-    {
-        if (it->getClientFd() != cl.getClientFd())
+	cl.sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + "\r\n");
+    for(std::vector<Client>::iterator it = ch.users.begin(); it != ch.users.end(); it++) {
+        if (it->getClientFd() != cl.getClientFd()){
             it->sendMessage(cl.username + " Has joined to channel " + ch.chName + "\n");
-    }
+			cl.sendMessage(":" + it->getClientName() + "!" + it->username + "@" + it->hostname + " JOIN " + ch.chName + "\r\n");
+			it->sendMessage(":" + cl.getClientName() + "!" + cl.username + "@" + cl.hostname + " JOIN " + ch.chName + "\r\n");
+		}
+	}
 }
 
 void Commands::runJoin(Server &sv, Client &cl, std::string chName)
